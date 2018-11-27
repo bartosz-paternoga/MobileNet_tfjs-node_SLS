@@ -26,12 +26,16 @@ class App extends Component {
           elem1.style.display = 'block';
           const elem2 = document.getElementById('sk-cube-grid');
           elem2.style.display = 'block';
+          const elem3 = document.getElementById('drpx');
+          elem3.style.display = 'none';
 
       } else {
           const elem1 = document.getElementById('loading-message');
           elem1.style.display = '';
           const elem2 = document.getElementById('sk-cube-grid');
           elem2.style.display = '';
+          const elem3 = document.getElementById('drpx');
+          elem3.style.display = 'block';
 
           }
         } 
@@ -141,7 +145,7 @@ class App extends Component {
               <audio id="xyz" src={sound} preload="auto"></audio><br/>
 
             <div id="drp">
-              <Dropzone  
+              <Dropzone  id="drpx"
                 onDrop={this.handleUploadImages}
                 multiple
                 accept="image/*"
