@@ -9,10 +9,8 @@ import './App.css'
 class App extends Component {
 
         state = {
-
           selectedFile: '',
           url: ''
-
         };
 
 
@@ -21,8 +19,28 @@ class App extends Component {
 
     let URL;
 
+    const Loader = (modelLoad) => {
+    
+      if (modelLoad !=="") {
+          const elem1 = document.getElementById('loading-message');
+          elem1.style.display = 'block';
+          const elem2 = document.getElementById('sk-cube-grid');
+          elem2.style.display = 'block';
+
+      } else {
+          const elem1 = document.getElementById('loading-message');
+          elem1.style.display = '';
+          const elem2 = document.getElementById('sk-cube-grid');
+          elem2.style.display = '';
+
+          }
+        } 
+
+    Loader('x');
+
     const imgPreview = document.getElementById('img-preview');
     imgPreview.src = '';
+   
     // uploads is an array that would hold all the post methods for each image to be uploaded, then we'd use axios.all()
     const uploads = images.map(image => {
       // our formdata
@@ -64,6 +82,7 @@ class App extends Component {
         const result = res + add+ res1;
         URL = result;
 
+
         function translate() {
 
           console.log("URL", URL)
@@ -74,15 +93,19 @@ class App extends Component {
 
           ourRequest.open("POST", OpenWhiskUrl, true);
           ourRequest.setRequestHeader('Content-type','application/json');
-
+          
+          
           ourRequest.onload = function() {
-            if (ourRequest.status == 400) {
+            if (ourRequest.status === 400) {
                 console.log("Error, check your network connection.");
                   }
             else {
+                 Loader('');
                  document.getElementById('xyz').play();
                  console.log("ourRequest.responseText:",(ourRequest.responseText).toString());
-                 alert(ourRequest.responseText)
+                 alert(ourRequest.responseText);
+                 imgPreview.src = '';
+
                   }
 
             }
@@ -90,6 +113,7 @@ class App extends Component {
         }
 
         translate();
+
 
     });
 
@@ -115,9 +139,28 @@ class App extends Component {
               >
               Press to select files to upload, or make a pic when on mobile.
               </Dropzone><br/>
-
-              <img src="" id="img-preview" alt='' width="200" height="200" />
+            
            </div>         
+
+
+          <div id="loading-message">
+            <p>This will take a few moments ...</p>
+          </div>
+      
+          <div className="sk-cube-grid" id="sk-cube-grid">
+            <div className="sk-cube sk-cube1"></div>
+            <div className="sk-cube sk-cube2"></div>
+            <div className="sk-cube sk-cube3"></div>
+            <div className="sk-cube sk-cube4"></div>
+            <div className="sk-cube sk-cube5"></div>
+            <div className="sk-cube sk-cube6"></div>
+            <div className="sk-cube sk-cube7"></div>
+            <div className="sk-cube sk-cube8"></div>
+            <div className="sk-cube sk-cube9"></div>
+          </div><br/>
+
+          <img src="" id="img-preview" alt='' width="200" height="200" />
+
          </div>
       )
     }
