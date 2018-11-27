@@ -97,16 +97,25 @@ class App extends Component {
           
           ourRequest.onload = function() {
             if (ourRequest.status === 400) {
-                console.log("Error, check your network connection.");
+                  console.log("Error, check your network connection.");
                   }
             else {
-                 Loader('');
-                 document.getElementById('xyz').play();
-                 console.log("ourRequest.responseText:",(ourRequest.responseText).toString());
-                 alert(ourRequest.responseText);
-                 imgPreview.src = '';
+                  Loader('');
+                  document.getElementById('xyz').play();
+                  console.log("ourRequest.responseText:",(ourRequest.responseText).toString());
 
-                  }
+                  const obj = JSON.parse(ourRequest.responseText);
+                  const a = obj.results;
+                  const originalString = a;
+                  const splitString = originalString.split("className:");
+                  const lenx = splitString[1].length;
+                  const resx = splitString[1].substring(0, lenx-1);
+                  const result = "PREDICTION RESULT: " + resx;
+
+                  alert(result);
+                  imgPreview.src = '';
+
+              }
 
             }
                 ourRequest.send(JSON.stringify(OpenWhiskUrl));
